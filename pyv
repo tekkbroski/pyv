@@ -1,0 +1,20 @@
+# Add this to your ~/.bashrc or ~/.zshrc
+
+pyv() {
+    local VENV_NAME="venv"
+    local VENV_PATH="${PWD}/${VENV_NAME}"
+
+    # Explicitly unset VIRTUAL_ENV to prevent pyenv interference
+    unset VIRTUAL_ENV
+
+    if [ -d "${VENV_PATH}" ] && [ -f "${VENV_PATH}/bin/activate" ]; then
+        # Activate existing virtual environment
+        printf "\033[32mActivating virtual environment: %s\033[0m\n" "${VENV_NAME}" >&2
+        source "${VENV_PATH}/bin/activate"
+    else
+        # Create and activate new virtual environment
+        printf "\033[32mCreating virtual environment: %s\033[0m\n" "${VENV_NAME}" >&2
+        python3 -m venv "${VENV_NAME}"
+        source "${VENV_PATH}/bin/activate"
+    fi
+}
